@@ -63,6 +63,6 @@ public class gpsHandler : MonoBehaviour
 
     public void Update()
     {
-        gpsDebug.GetComponent<Text>().text = Input.location.lastData.latitude.ToString();
+        gpsDebug.GetComponent<Text>().text = Input.location.lastData.latitude.ToString() +"-"+ Input.location.lastData.longitude.ToString();
     }
 }

@@ -38,12 +38,12 @@ public class OpenDataDownload : MonoBehaviour {
 
 
         //WWW www = new WWW("https://api.bsmsa.eu/ext/api/bsm/chargepoints/v1/chargepoints");
-        WWW www = new WWW("https://api.bsmsa.eu/ext/api/bsm/gbfs/v2/en/station_information");
+        WWW www = new WWW("https://opendata-ajuntament.barcelona.cat/data/api/action/datastore_search?resource_id=6b186e0f-5e38-4beb-8b1d-39dfa9b31053");
         yield return www;
 
         JObject obj = JObject.Parse(www.text);
         //JArray chargePoints = (JArray)obj["result"]["chargepoint"];
-        JArray chargePoints = (JArray)obj["data"]["stations"];
+        JArray chargePoints = (JArray)obj["result"]["records"];
 
         Debug.Log("Number chargePoints: " + chargePoints.Count);
 
@@ -55,9 +55,9 @@ public class OpenDataDownload : MonoBehaviour {
             //float lon = (float)chargePoint["Lng"];
             //string name = (string)chargePoint["ParkingName"];
 
-            float lat = (float)chargePoint["lat"];
-            float lon = (float)chargePoint["lon"];
-            string name = (string)chargePoint["address"];
+            float lat = (float)chargePoint["LATITUD"];
+            float lon = (float)chargePoint["LONGITUD"];
+            string name = (string)chargePoint["DIRECCIO"];
             //Debug.Log("Charge Point info lat, lon: " + lat.ToString() + "," + lon.ToString());
             if (!nameList.Contains(name))
             {

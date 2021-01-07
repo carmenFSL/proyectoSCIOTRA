@@ -8,7 +8,11 @@ public class MapHandlerScript : MonoBehaviour
 {
     [SerializeField]
     GameObject centerTileMap;
-    
+    [SerializeField]
+    GameObject Derecha;
+    [SerializeField]
+    GameObject Izquierda;
+
 
     public static int centerTileX, centerTileY;
     public static int zoom;
@@ -36,7 +40,9 @@ public class MapHandlerScript : MonoBehaviour
         objectOpenData.SendMessage("DownloadOpenData");
 
         StartCoroutine(LoadTile(centerTileX, centerTileY, centerTileMap));
-        
+        StartCoroutine(LoadTile(centerTileX + 1, centerTileY, Derecha));
+        StartCoroutine(LoadTile(centerTileX - 1, centerTileY, Izquierda));
+
     }
 
     //public void DownLoadCenterMapTileGps()
@@ -96,7 +102,9 @@ public class MapHandlerScript : MonoBehaviour
         if (zoom > 16) zoom = 16;
         WorldToTilePos(2.122279f, 41.384616f, zoom);
         StartCoroutine(LoadTile(centerTileX, centerTileY, centerTileMap));
-        
+        //StartCoroutine(LoadTile(centerTileX + 1, centerTileY, Derecha));
+        //StartCoroutine(LoadTile(centerTileX - 1, centerTileY, Izquierda));
+
 
         GameObject[] poiList = GameObject.FindGameObjectsWithTag("poi");
         foreach (GameObject o in poiList)
