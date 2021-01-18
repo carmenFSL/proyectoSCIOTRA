@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using UnityEngine.Android;
 
 public class gpsHandler : MonoBehaviour
 {
@@ -11,23 +13,25 @@ public class gpsHandler : MonoBehaviour
     IEnumerator Start()
     {
         
-#if UNITY_EDITOR
-        Debug.Log("Unity Editor");
+        //Debug.Log("Unity Editor");
         GameObject objectMm = GameObject.Find("MapHandler");
         objectMm.SendMessage("DownloadMap");
-#endif
+        //StartCoroutine("UpdateGpsValue");
+
         // First, check if user has location service enabled
         if (!Input.location.isEnabledByUser)
             yield break;
 
         // Start service before querying location
         Input.location.Start();
+        Debug.Log("Status gps gpsHandler: " + Input.location.status);
 
         // Wait until service initializes
-        int maxWait = 2;
+        int maxWait = 20;
         while (Input.location.status == LocationServiceStatus.Initializing && maxWait > 0)
         {
             yield return new WaitForSeconds(1);
+            Debug.Log("Status gps gpsHandler2: " + Input.location.status);
             maxWait--;
         }
 
@@ -47,7 +51,6 @@ public class gpsHandler : MonoBehaviour
         }
         else
         {
-
             GameObject objectM = GameObject.Find("MapHandler");
             objectM.SendMessage("DownloadMap");
 
@@ -58,11 +61,11 @@ public class gpsHandler : MonoBehaviour
        
 
         // Stop service if there is no need to query location updates continuously
-        // Input.location.Stop();
+        //Input.location.Stop();
     }
 
-    public void Update()
-    {
-        gpsDebug.GetComponent<Text>().text = Input.location.lastData.latitude.ToString() +"-"+ Input.location.lastData.longitude.ToString();
-    }
+    // public void Update()
+    // {
+    //     gpsDebug.GetComponent<Text>().text = Input.location.lastData.latitude.ToString() +"-"+ Input.location.lastData.longitude.ToString();
+    // }
 }

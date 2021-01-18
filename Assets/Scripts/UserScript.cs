@@ -9,9 +9,10 @@ public class UserScript : MonoBehaviour {
     double lonUser;
 
 
-    public void MapLocation()
+    public void Start()
     {
         
+        //StartCoroutine(Relocation());
         StartCoroutine(Relocation());
     }
 
@@ -28,28 +29,40 @@ public class UserScript : MonoBehaviour {
                 latUser = Input.location.lastData.latitude;
                 
             }
-            else
+            else // si gps no funciona, coje valores por defecto como
             {
                 
-                lonUser = 1.987563f;
-                latUser = 41.275f;
+                ////lonUser = 1.987563f;2.17643809599194
+                lonUser = 2.176513197839404;
+                ////latUser = 41.275f;41.44576852242452
+                latUser = 41.44576852242452;
                 
             }
             double a = DrawCubeX(lonUser, TileToWorldPos(x, y, zoom).X, TileToWorldPos(x + 1, y, zoom).X);
             double b = DrawCubeY(latUser, TileToWorldPos(x, y + 1, zoom).Y, TileToWorldPos(x, y, zoom).Y);
-
-            //Debug.Log(" Pos" + a + "/" + b);
+            
+            Debug.Log("Status gps user script: " + Input.location.status);
+            Debug.Log(" lonUser: " + lonUser + " // " + "latUser: " + latUser);
+            Debug.Log(" a: " + a + " // " + "b: " + b);
+            
             this.transform.position = new Vector3((float)a - 0.5f, (float)b - 0.5f, 0.0f);
 
             yield return new WaitForSeconds(3);
+            // yield return new WaitForSeconds(3);
+            // if (Input.location.status == LocationServiceStatus.Running)
+            // {
+            //     latUser = Input.location.lastData.latitude;
+            //     lonUser = Input.location.lastData.longitude;
+            //     MapLocation();
+            // }
         }
     }
+
     public struct Point
     {
         public double X;
         public double Y;
     }
-
 
     // p.X -> longitud
     // p.Y -> latitud

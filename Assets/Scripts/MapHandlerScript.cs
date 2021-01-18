@@ -10,8 +10,12 @@ public class MapHandlerScript : MonoBehaviour
     GameObject centerTileMap;
     [SerializeField]
     GameObject Derecha;
+    // [SerializeField]
+    // GameObject Izquierda;
     [SerializeField]
-    GameObject Izquierda;
+    GameObject ESDerecha;
+    [SerializeField]
+    GameObject ESCentro;
 
 
     public static int centerTileX, centerTileY;
@@ -23,10 +27,11 @@ public class MapHandlerScript : MonoBehaviour
     }
     public void DownloadMap()
     {
-        zoom = 13;
+        zoom = 12;
 
         if (Input.location.status == LocationServiceStatus.Running)
         {
+            Debug.Log("Status gps map handler: " + Input.location.status);
             WorldToTilePos(Input.location.lastData.longitude, Input.location.lastData.latitude, zoom);
         }
         else
@@ -39,9 +44,14 @@ public class MapHandlerScript : MonoBehaviour
         GameObject objectOpenData = GameObject.Find("OpenDataHandler");
         objectOpenData.SendMessage("DownloadOpenData");
 
+        GameObject objectUs = GameObject.Find("User");
+        objectUs.SendMessage("MapLocation");
+
         StartCoroutine(LoadTile(centerTileX, centerTileY, centerTileMap));
         StartCoroutine(LoadTile(centerTileX + 1, centerTileY, Derecha));
-        StartCoroutine(LoadTile(centerTileX - 1, centerTileY, Izquierda));
+        //StartCoroutine(LoadTile(centerTileX - 1, centerTileY, Izquierda));
+        StartCoroutine(LoadTile(centerTileX + 1, centerTileY + 1, ESDerecha));
+        StartCoroutine(LoadTile(centerTileX, centerTileY + 1, ESCentro));
 
     }
 
@@ -58,7 +68,8 @@ public class MapHandlerScript : MonoBehaviour
         tileY = (double)((1.0f - Mathf.Log(Mathf.Tan((float)lat * Mathf.PI / 180.0f) + 1.0f / Mathf.Cos((float)lat * Mathf.PI / 180.0f)) / Mathf.PI) / 2.0f * (1 << zoom));
         centerTileX = Mathf.FloorToInt((float)tileX);
         centerTileY = Mathf.FloorToInt((float)tileY);
-        Debug.Log("Primer Cop X:" + tileX + "Y" + tileY);
+        Debug.Log("Primer Cop X: " + tileX + " Y: " + tileY);
+        Debug.Log("Status gps mapHandler: " + Input.location.status);
     }
 
     IEnumerator LoadTile(int x, int y, GameObject quadTile)
@@ -86,6 +97,11 @@ public class MapHandlerScript : MonoBehaviour
         if (zoom < 10) zoom = 10;
         WorldToTilePos(2.122279f, 41.384616f, zoom);
         StartCoroutine(LoadTile(centerTileX, centerTileY, centerTileMap));
+        // StartCoroutine(LoadTile(centerTileX, centerTileY, centerTileMap));
+        // StartCoroutine(LoadTile(centerTileX + 1, centerTileY, Derecha));
+        // StartCoroutine(LoadTile(centerTileX - 1, centerTileY, Izquierda));
+        // StartCoroutine(LoadTile(centerTileX + 1, centerTileY + 1, ESDerecha));
+        // StartCoroutine(LoadTile(centerTileX, centerTileY + 1, ESCentro));
         
 
         GameObject[] poiList = GameObject.FindGameObjectsWithTag("poi");
@@ -102,8 +118,10 @@ public class MapHandlerScript : MonoBehaviour
         if (zoom > 16) zoom = 16;
         WorldToTilePos(2.122279f, 41.384616f, zoom);
         StartCoroutine(LoadTile(centerTileX, centerTileY, centerTileMap));
-        //StartCoroutine(LoadTile(centerTileX + 1, centerTileY, Derecha));
-        //StartCoroutine(LoadTile(centerTileX - 1, centerTileY, Izquierda));
+        // StartCoroutine(LoadTile(centerTileX + 1, centerTileY, Derecha));
+        // StartCoroutine(LoadTile(centerTileX - 1, centerTileY, Izquierda));
+        // StartCoroutine(LoadTile(centerTileX + 1, centerTileY + 1, ESDerecha));
+        // StartCoroutine(LoadTile(centerTileX, centerTileY + 1, ESCentro));
 
 
         GameObject[] poiList = GameObject.FindGameObjectsWithTag("poi");
