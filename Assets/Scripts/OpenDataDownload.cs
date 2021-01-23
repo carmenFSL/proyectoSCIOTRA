@@ -58,6 +58,7 @@ public class OpenDataDownload : MonoBehaviour {
             float lat = (float)chargePoint["LATITUD"];
             float lon = (float)chargePoint["LONGITUD"];
             string name = (string)chargePoint["DIRECCIO"];
+            string barrio = (string)chargePoint["NOM_DISTRICTE"];
             //Debug.Log("Charge Point info lat, lon: " + lat.ToString() + "," + lon.ToString());
             if (!nameList.Contains(name))
             {
@@ -66,6 +67,7 @@ public class OpenDataDownload : MonoBehaviour {
                 o.GetComponent<PoiScript>().latObject = lat;
                 o.GetComponent<PoiScript>().lonObject = lon;
                 o.GetComponent<PoiScript>().textDescription = name;
+                o.GetComponent<PoiScript>().textBarrio = barrio;
                 o.SendMessage("MapLocation");
             }
         }

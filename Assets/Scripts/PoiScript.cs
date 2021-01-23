@@ -12,18 +12,20 @@ public class PoiScript: MonoBehaviour
     public double lonObject;
     [SerializeField]
     public string textDescription;
+    [SerializeField]
+    public string textBarrio;
 
     public int pkId;
 
 
     GameObject description;
+    GameObject barrio;
 
     // Start is called before the first frame update
     void Start()
     {
         description = GameObject.Find("Description");
-        
-
+        barrio = GameObject.Find("Barrio");
     }
 
     public void MapLocation()
@@ -84,5 +86,6 @@ public class PoiScript: MonoBehaviour
         }
         this.GetComponent<MeshRenderer>().material.color = Color.blue;
         description.GetComponent<Text>().text = textDescription;
+        barrio.GetComponent<Text>().text = textBarrio;
     }
 }

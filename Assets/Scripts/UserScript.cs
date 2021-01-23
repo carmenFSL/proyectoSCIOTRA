@@ -33,9 +33,9 @@ public class UserScript : MonoBehaviour {
             {
                 
                 ////lonUser = 1.987563f;2.17643809599194
-                lonUser = 2.176513197839404;
+                lonUser = 2.1695954041421004;
                 ////latUser = 41.275f;41.44576852242452
-                latUser = 41.44576852242452;
+                latUser = 41.384750315708395;
                 
             }
             double a = DrawCubeX(lonUser, TileToWorldPos(x, y, zoom).X, TileToWorldPos(x + 1, y, zoom).X);
